@@ -13,14 +13,16 @@ searchOption = "/top/?t=year" # most popular articles of the year
 # import packages and modules
 from urllib import request
 from bs4 import BeautifulSoup
+from selenium import webdriver
 
 # function ~~
 def f(category):
     url = baseUrl + category + searchOption
-    html = request.urlopen(url).read().decode('utf8')
-    soup = BeautifulSoup(html, 'html.parser')
-    elements = soup.select('div._1oQyIsiPHYt6nx7VOmd1sz')
-    print(len(elements))
+    driver = webdriver.Chrome('/usr/local/bin/chromedriver')
+    #html = request.urlopen(url).read().decode('utf8')
+    #soup = BeautifulSoup(html, 'html.parser')
+    #elements = soup.select('div._1oQyIsiPHYt6nx7VOmd1sz')
+    #print(len(elements))
 f(categories[0])
 
 # entire process
