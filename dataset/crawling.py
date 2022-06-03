@@ -9,7 +9,7 @@ KAIST CS372 - Classification of online post categories based on community tenden
 baseUrl = "https://www.reddit.com/r/"
 categories = ["entertainment", "politics", "travel", "parenting", "business", "sports"]
 searchOption = "/top/?t=year" # most popular articles of the year
-postPerCatecory = 10 # the number of posts collected per category
+postPerCatecory = 1000 # the number of posts collected per category
 csvFileName = "dataset-reddit.csv"
 
 # import packages and modules
@@ -29,14 +29,16 @@ def getPostsFromCategory(category):
     # crawling with scrolling
     elements = []
     targetHeight = 0
-    while len(elements) < postPerCatecory:
+    while len(elements) <= postPerCatecory:
         screenHeight = driver.execute_script("return window.screen.height;")
         targetHeight += screenHeight
         driver.execute_script("window.scrollTo(0, {x});".format(x=targetHeight))
         while driver.execute_script("return document.body.scrollHeight;") < targetHeight:
-            time.sleep(0.1)
+            driver.execute_script("window.scrollTo(0, {x});".format(x=targetHeight))
+            time.sleep(0.2)
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         elements = soup.select('div._1oQyIsiPHYt6nx7VOmd1sz')
+        #print(len(elements))
     
     # get information from elements
     posts = []
