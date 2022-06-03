@@ -38,6 +38,11 @@ def html2posts(html):
         posts.append([title, content, link, image, video, category])
     return posts
 
+# function to save as a csv file
+def saveAsCsv(data, filename):
+    df = pd.DataFrame(data, columns=['title', 'content', 'link', 'image', 'video', 'category'])
+    df.to_csv(filename, index=True, encoding='utf-8')
+
 # function to get all posts for category
 def getPostsFromCategory(category):
     # load chrome web driver
@@ -56,16 +61,12 @@ def getPostsFromCategory(category):
             driver.execute_script("window.scrollTo(0, {x});".format(x=targetHeight))
             time.sleep(0.2)
         posts = html2posts(driver.page_source)
+        if len(posts) > 980: saveAsCsv(posts, 'dataset-reddit-'+category+'.csv')
         print(len(posts))
     return posts[:postPerCatecory]
 
-# function to save as a csv file
-def saveAsCsv(data, filename):
-    df = pd.DataFrame(data, columns=['title', 'content', 'link', 'image', 'video', 'category'])
-    df.to_csv(filename, index=True, encoding='utf-8')
-
 # entire process
 if __name__ == "__main__":
-    for category in categories:
+    for category in categories[4:]:
         posts = getPostsFromCategory(category)
         saveAsCsv(posts, 'dataset-reddit-'+category+'.csv')
