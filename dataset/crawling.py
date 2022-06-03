@@ -9,7 +9,7 @@ KAIST CS372 - Classification of online post categories based on community tenden
 baseUrl = "https://www.reddit.com/r/"
 categories = ["entertainment", "politics", "travel", "parenting", "business", "sports"]
 searchOption = "/top/?t=year" # most popular articles of the year
-postPerCatecory = 10 #1000 # the number of posts collected per category
+postPerCatecory = 1000 # the number of posts collected per category
 
 # import packages and modules
 import time
@@ -56,6 +56,7 @@ def getPostsFromCategory(category):
             driver.execute_script("window.scrollTo(0, {x});".format(x=targetHeight))
             time.sleep(0.2)
         posts = html2posts(driver.page_source)
+        print(len(posts))
     return posts[:postPerCatecory]
 
 # function to save as a csv file
