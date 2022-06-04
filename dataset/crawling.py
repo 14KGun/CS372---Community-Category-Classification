@@ -61,12 +61,12 @@ def getPostsFromCategory(category):
             driver.execute_script("window.scrollTo(0, {x});".format(x=targetHeight))
             time.sleep(0.2)
         posts = html2posts(driver.page_source)
-        if len(posts) > 980: saveAsCsv(posts, 'dataset-reddit-'+category+'.csv')
-        print(len(posts))
+        if len(posts) > 960: saveAsCsv(posts, 'dataset-reddit-'+category+'.csv')
+        #print(len(posts))
     return posts[:postPerCatecory]
 
 # entire process
 if __name__ == "__main__":
-    for category in categories[4:]:
+    for category in categories:
         posts = getPostsFromCategory(category)
         saveAsCsv(posts, 'dataset-reddit-'+category+'.csv')
